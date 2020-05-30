@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			    http://www.springframework.org/schema/beans/spring-beans.xsd
+			    http://www.springframework.org/schema/context
+			    http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--导入db配置文件-->
+    <context:property-placeholder location="classpath:db-info/oracle-conf.properties"/>
+    <!--数据源-->
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <!--MP全局策略配置-->
+    <bean id="globalConfiguration" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+        <property name="keyGenerator" ref="keyGenerator"/>
+    </bean>
+<bean id="keyGenerator" class="com.baomidou.mybatisplus.incrementer.OracleKeyGenerator"/>
+    <!--配置工厂类-->
+    <bean id="sessionFactoryBean" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="druidDataSource"/>
+		<property name="globalConfig" ref="globalConfiguration"/>
+        <property name="typeAliasesPackage" value="com.james.domain"/>
+        <property name="configLocation" value="classpath:mybatis-conf/mybatis-conf.xml"/>
+    </bean>
+
+
+    <!--配置要扫描的包-->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.james.dao"/>
+    </bean>
+</beans>
