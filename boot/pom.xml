@@ -20,7 +20,7 @@
         <spring.version>5.0.2.RELEASE</spring.version>
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.12</log4j.version>
-        <shiro.version>1.2.3</shiro.version>
+        <shiro.version>1.9.1</shiro.version>
         <oracle.version>11.2.0.4.0</oracle.version>
     </properties>
     <!-- 锁定jar包版本 -->
